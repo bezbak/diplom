@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets, filters, status
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import User, Product, Cart, Category, CartItem
-from .serializers import RegisterSerializer, UserSerializer, ProductSerializer, CategorySerializer, CartItemSerializer, CartSerializer
+from .serializers import RegisterSerializer, UserSerializer, ProductSerializer, CategorySerializer, CartItemSerializer, CartSerializer, CartItemCreateSerializer
 from rest_framework.response import Response
 class RegisterAPIView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -32,6 +32,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class CartItemViewSet(viewsets.ModelViewSet):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    
+    def get_serializer_class(self):
+        if self.action == "create":
+            return CartItemCreateSerializer
+        return CartItemSerializer
     
     def create(self, request, *args, **kwargs):
         cart_id = request.data.get('cart')
