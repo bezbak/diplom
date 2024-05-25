@@ -95,12 +95,12 @@ class CartItem(models.Model):
         related_name='items',
         on_delete=models.CASCADE
     )
-    cuantity = models.IntegerField(
+    quantity = models.IntegerField(
         'Количество'
     )
     
     def __str__(self):
-        return f"{self.product.title} - {self.cuantity}"
+        return f"{self.product.title} - {self.quantity}"
     
     class Meta:
         verbose_name = 'Товар в корзине'
